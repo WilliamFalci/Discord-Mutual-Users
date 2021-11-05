@@ -46,8 +46,12 @@ def build_users(guilds: list,values) -> dict:
 def filter_mutuals(users: dict,values) -> dict:    
     mutuals = {m:users[m] for m in users if len(users[m]) > 1}
     query_guilds = values
+    query_roles_A = ['Federation Member']
+    query_roles_B = ['[NO] Please Stop']
+    print('##############')
+    print(query_guilds)
     if len(sys.argv) > 1:
-        mutuals = {m:users[m] for m in mutuals if all([g in users[m]['servers'] for g in query_guilds])}
+        mutuals = {m:users[m] for m in mutuals if all([g in users[m]['servers'] for g in query_guilds]) and all([g in users[m]['roles']['The Silent'] for g in query_roles_A]) and all([g in users[m]['roles']['Banana Blender'] for g in query_roles_B])}
     return mutuals
 
 def build_json_object(mutual_users: dict) -> dict:
